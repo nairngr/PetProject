@@ -23,15 +23,15 @@ public class PetProject {
             switch (userInput) {
                 case 1 -> displayPets();
                 case 2 -> addPets();
-                //case 3 
-                //case 4 
+                case 3 -> updatePet();
+                case 4 -> removePet();
                 case 5 -> searchPetsByName(); 
                 case 6 -> searchPetsByAge();
                 case 7 -> {
                     System.out.println("Goodbye!");
                     repeat = false;
                 }
-            }
+            } 
         }
     }
     
@@ -42,8 +42,8 @@ public class PetProject {
         System.out.printf("What would you like to do?%n");
         System.out.printf("1) View all Pets%n");
         System.out.printf("2) Add more Pets%n");
-        //System.out.printf("3) Update a Pet%n");
-        //System.out.printf("4) Remove a Pet%n);
+        System.out.printf("3) Update a Pet%n");
+        System.out.printf("4) Remove a Pet%n");
         System.out.printf("5) Search Pets by name%n");
         System.out.printf("6) Search Pets by age%n");
         System.out.printf("7) Exit Program%n");
@@ -108,6 +108,7 @@ public class PetProject {
                 if(index <pets.length){
                     pets[index] = pet;
                     index++;
+                    System.out.println("Pets added.");
                 }else{
                     System.out.println("Array is full.");
                     break;
@@ -134,7 +135,7 @@ public class PetProject {
         }
 
         if (!found) {
-            System.out.println(searchName + "does not exist.");
+            System.out.println(searchName + " does not exist.");
         }
     }
     
@@ -157,6 +158,46 @@ public class PetProject {
 
         if (!found) {
             System.out.println("No pets found with the age: " + searchAge);
+        }
+    }
+    
+    private static void updatePet() throws IOException {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        displayPets();
+        
+        System.out.print("Enter the Pet ID of the pet you want to update: ");
+        int petID = scanner.nextInt();
+
+        if (petID >= 0 && petID < pets.length && pets[petID] != null) {
+            System.out.print("Enter the pets new name: ");
+            String newName = scanner.next();
+
+            System.out.print("Enter the pets new age: ");
+            int newAge = scanner.nextInt();
+
+            pets[petID] = new Pet(newName, newAge);
+            
+        } else {
+            System.out.println("Pet ID does not exist. Try again.");
+        }
+    }
+    
+    private static void removePet() throws IOException {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        displayPets();
+            
+        System.out.print("Enter the Pet ID of the pet you want to remove: ");
+        int petID = scanner.nextInt();
+
+        if (petID >= 0 && petID < pets.length && pets[petID] != null) {
+            pets[petID] = null;
+            System.out.println("Number " + petID + " has been removed.");
+        } else {
+            System.out.println("Pet ID does not exist. Try again.");
         }
     }
 }
