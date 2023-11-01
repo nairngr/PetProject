@@ -25,8 +25,8 @@ public class PetProject {
                 case 2 -> addPets();
                 //case 3 
                 //case 4 
-                //case 5
-                //case 6
+                case 5 -> searchPetsByName(); 
+                case 6 -> searchPetsByAge();
                 case 7 -> {
                     System.out.println("Goodbye!");
                     repeat = false;
@@ -35,18 +35,17 @@ public class PetProject {
         }
     }
     
-    //shows the user their choices and get their input
     private static int getUserChoice() {
         
         Scanner scan = new Scanner(System.in);
         
         System.out.printf("What would you like to do?%n");
-        System.out.printf("1) View all pets%n");
-        System.out.printf("2) Add more pets%n");
+        System.out.printf("1) View all Pets%n");
+        System.out.printf("2) Add more Pets%n");
         //System.out.printf("3) Update a Pet%n");
         //System.out.printf("4) Remove a Pet%n);
-        //System.out.printf("5) Search pets by name%n);
-        //System.out.printf("6) Search pets by age%n);
+        System.out.printf("5) Search Pets by name%n");
+        System.out.printf("6) Search Pets by age%n");
         System.out.printf("7) Exit Program%n");
         
         int userInput = scan.nextInt();
@@ -115,6 +114,51 @@ public class PetProject {
             }
         }
     }
+    
+    private static void searchPetsByName() {
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the pets name: ");
+        String searchName = scanner.nextLine();
+
+        boolean found = false;
+
+        for (Pet pet : pets) {
+            if (pet != null && pet.getName().equalsIgnoreCase(searchName)) {
+                printTableHeader();
+                printTableRow(0, pet.getName(), pet.getAge());
+                printTableFooter(1);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println(searchName + "does not exist.");
+        }
+    }
+    
+    private static void searchPetsByAge() {
+        
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the pets name: ");
+        int searchAge = scanner.nextInt();
+
+        boolean found = false;
+
+        for (Pet pet : pets) {
+            if (pet != null && pet.getAge() == searchAge) {
+                printTableHeader();
+                printTableRow(0, pet.getName(), pet.getAge());
+                printTableFooter(1);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No pets found with the age: " + searchAge);
+        }
+    }
 }
 
 class Pet {
@@ -131,7 +175,7 @@ class Pet {
         return name;
     }
     
-    public int getAge(){
+    public int getAge() {
        return age;
     }
 }
